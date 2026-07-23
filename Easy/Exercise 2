@@ -1,0 +1,12 @@
+def star_level(x):
+    if x.points >= 95:
+        return 3 
+    elif x.country == "Canada":
+        return 3 
+    elif 85 <= x.points < 95:
+        return 2
+    else:
+        return 1 
+
+
+star_ratings = reviews.apply(star_level,axis=1)
