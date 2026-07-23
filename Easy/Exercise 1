@@ -1,0 +1,3 @@
+tropical = reviews.description.str.contains("tropical").sum()
+fruity = reviews.description.str.contains("fruity").sum()
+descriptor_counts = pd.Series([tropical,fruity], index = ["tropical","fruity"])
