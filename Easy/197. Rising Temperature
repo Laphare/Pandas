@@ -1,0 +1,5 @@
+import pandas as pd
+
+def rising_temperature(weather: pd.DataFrame) -> pd.DataFrame:
+    df = weather.merge(weather, left_on = "recordDate", right_on = weather["recordDate"]+ pd.Timedelta(days=1),suffixes = ("_today", "_prev"))
+    return df[df["temperature_today"]>df["temperature_prev"]][["id_today"]].rename(columns= {"id_today":"id"})
