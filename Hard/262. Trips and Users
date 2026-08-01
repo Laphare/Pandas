@@ -1,0 +1,24 @@
+import pandas as pd
+
+def trips_and_users(trips: pd.DataFrame, users: pd.DataFrame) -> pd.DataFrame:
+    unbanned_user = users[users["banned"] == "No"]
+    client = unbanned_user [unbanned_user["role"] == "client"]
+    driver = unbanned_user [unbanned_user["role"] == "driver"]
+
+
+
+    df = trips.merge(client,left_on = "client_id",right_on = "users_id",how = "inner")
+    df = df.merge(driver,left_on = "driver_id",right_on = "users_id",how = "inner")
+
+    df = df[(df["request_at"] >= "2013-10-01") & (df["request_at"] <= "2013-10-03")]
+
+
+    total_trips = df.groupby("request_at").size()
+    canceled_trips = df[df["status"].isin(["cancelled_by_driver","cancelled_by_client"])].groupby("request_at").size()
+
+    result = (canceled_trips/total_trips).fillna(0).round(2).reset_index()
+    result.columns = ["Day", "Cancellation Rate"]
+
+    
+
+    return result
