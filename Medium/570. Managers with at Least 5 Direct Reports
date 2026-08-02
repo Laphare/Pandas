@@ -1,0 +1,6 @@
+import pandas as pd
+
+def find_managers(employee: pd.DataFrame) -> pd.DataFrame:
+    df = employee.merge(employee,left_on ="managerId",right_on = "id",suffixes = ("_e","_m"))
+    df1 = df.groupby("name_m").size().reset_index(name="count")
+    return df1[df1["count"]>=5][["name_m"]].rename(columns = {"name_m":"name"})
