@@ -5,4 +5,4 @@ def find_investments(insurance: pd.DataFrame) -> pd.DataFrame:
     c2 = insurance.duplicated(subset = ["tiv_2015"],keep= False)
     result = insurance[c1 & c2]
 
-    return pd.DataFrame({"tiv_2016":[result["tiv_2016"].sum()]})
+    return pd.DataFrame({"tiv_2016":[round(result["tiv_2016"].sum(),2)]})
