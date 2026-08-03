@@ -1,0 +1,8 @@
+import pandas as pd
+
+def find_investments(insurance: pd.DataFrame) -> pd.DataFrame:
+    c1 = ~insurance.duplicated(subset = ["lat","lon"], keep= False)
+    c2 = insurance.duplicated(subset = ["tiv_2015"],keep= False)
+    result = insurance[c1 & c2]
+
+    return pd.DataFrame({"tiv_2016":[result["tiv_2016"].sum()]})
