@@ -1,0 +1,7 @@
+import pandas as pd
+
+def big_countries(world: pd.DataFrame) -> pd.DataFrame:
+    area_large = world[world["area"]>=3000000]
+    population_large = world[world["population"]>=25000000]
+    result = pd.concat([area_large,population_large])
+    return result.drop_duplicates()[["name","population","area"]]
