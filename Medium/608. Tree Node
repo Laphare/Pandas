@@ -1,0 +1,8 @@
+import pandas as pd
+
+def tree_node(tree: pd.DataFrame) -> pd.DataFrame:
+    p_set = set(tree['p_id'].dropna())
+    tree["type"] ="Leaf" 
+    tree.loc[(tree['id'].isin(p_set)) & (tree['p_id'].notna()), 'type'] = 'Inner'
+    tree.loc[tree['p_id'].isna(), 'type'] = 'Root'
+    return tree[["id","type"]]
