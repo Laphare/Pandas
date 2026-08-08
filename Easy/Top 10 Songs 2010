@@ -1,0 +1,4 @@
+select DISTINCT year_rank, group_name, song_name
+from billboard_top_100_year_end
+WHERE year = 2010
+LIMIT 10
