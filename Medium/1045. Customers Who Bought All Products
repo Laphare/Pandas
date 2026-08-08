@@ -1,0 +1,7 @@
+import pandas as pd
+
+def find_customers(customer: pd.DataFrame, product: pd.DataFrame) -> pd.DataFrame:
+    x = customer.groupby("customer_id")["product_key"].nunique()
+    y = product["product_key"].size
+    condition = (x == y)
+    return x[condition].reset_index()[["customer_id"]]
