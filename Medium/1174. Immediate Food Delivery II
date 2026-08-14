@@ -1,0 +1,8 @@
+import pandas as pd
+
+def immediate_food_delivery(delivery: pd.DataFrame) -> pd.DataFrame:
+    delivery["f_o"] = delivery.groupby("customer_id")["order_date"].transform("min")
+    delivery["f_d"] = delivery.groupby("customer_id")["customer_pref_delivery_date"].transform("min")
+    imma = delivery.drop_duplicates("customer_id").query("f_o == f_d")["customer_id"].count()
+    total = delivery["customer_id"].nunique()
+    return pd.DataFrame({"immediate_percentage":[round(imma/total*100,2)]})
