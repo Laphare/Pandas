@@ -1,0 +1,10 @@
+import pandas as pd
+
+def queries_stats(queries: pd.DataFrame) -> pd.DataFrame:
+    queries = queries.dropna(subset=["query_name"])
+    queries["quality"] = queries["rating"]/queries["position"]
+    queries["poor"] = queries["rating"] < 3
+    df = queries.groupby("query_name",as_index=False).agg(quality = ("quality","mean"),poor_query_percentage = ("poor","mean"))
+    df["poor_query_percentage"] = (df["poor_query_percentage"]*100+ 1e-9).round(2)
+    df["quality"] = (df["quality"]+ 1e-9).round(2)
+    return df
