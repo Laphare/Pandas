@@ -1,0 +1,10 @@
+import pandas as pd
+
+def movie_rating(movies: pd.DataFrame, users: pd.DataFrame, movie_rating: pd.DataFrame) -> pd.DataFrame:
+    user = movie_rating.groupby("user_id",as_index = False)["rating"].count()
+    time = movie_rating[movie_rating["created_at"].dt.to_period("M") == "2020-02"]
+    movie = time.groupby("movie_id",as_index = False)["rating"].mean()
+    u = users.merge(user,on="user_id").sort_values(["rating","name"],ascending = [False,True]).head(1)[["name"]].rename(columns={"name":"results"})
+    m = movies.merge(movie,on="movie_id").sort_values(["rating","title"],ascending = [False,True]).head(1)[["title"]].rename(columns={"title":"results"})      
+    result = pd.concat([u,m])
+    return result
