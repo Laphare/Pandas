@@ -1,0 +1,8 @@
+import pandas as pd
+
+def list_products(products: pd.DataFrame, orders: pd.DataFrame) -> pd.DataFrame:
+    orders = orders[orders["order_date"].dt.to_period("M") == "2020-02"]
+    orders = orders.groupby("product_id",as_index=False)["unit"].sum()
+    orders = orders.query("unit>=100")
+    x = products.merge(orders,on = "product_id")
+    return x[["product_name","unit"]]
