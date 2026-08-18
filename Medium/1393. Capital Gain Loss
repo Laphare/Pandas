@@ -1,0 +1,8 @@
+
+import pandas as pd
+
+def capital_gainloss(stocks: pd.DataFrame) -> pd.DataFrame:
+    stocks["i"] = stocks["operation"].map({"Buy":-1,"Sell":1})
+    stocks["gain"] = stocks["i"] * stocks["price"]
+    df = stocks.groupby("stock_name")["gain"].sum().reset_index(name="capital_gain_loss")
+    return df
