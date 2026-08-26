@@ -1,0 +1,7 @@
+import pandas as pd
+
+def count_employees(employees: pd.DataFrame) -> pd.DataFrame:
+    df = employees.merge(employees,left_on="reports_to",right_on="employee_id")
+    df = df.groupby(["employee_id_y","name_y"],as_index=False).agg(reports_count=("age_x","count"),average_age=("age_x","mean"))
+    df["average_age"] = (df["average_age"] + 0.5).astype(int)
+    return df.rename(columns={"employee_id_y":"employee_id","name_y":"name"})
