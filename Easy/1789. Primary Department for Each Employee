@@ -1,0 +1,7 @@
+import pandas as pd
+
+def find_primary_department(employee: pd.DataFrame) -> pd.DataFrame:
+    c1 = employee["primary_flag"].eq("Y")
+    c2 = employee.groupby("employee_id")["primary_flag"].transform("count").eq(1)
+
+    return employee[c1|c2][["employee_id","department_id"]]
