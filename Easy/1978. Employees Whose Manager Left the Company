@@ -1,0 +1,6 @@
+import pandas as pd
+
+def find_employees(employees: pd.DataFrame) -> pd.DataFrame:
+    c2 = ~employees["manager_id"].isin(employees["employee_id"])
+    c3 = employees["salary"]<30000
+    return employees[c2 & c3][["employee_id"]]
