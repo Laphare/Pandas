@@ -1,0 +1,7 @@
+import pandas as pd
+
+def find_employees(employees: pd.DataFrame) -> pd.DataFrame:
+    c1 = ~employees["manager_id"].isna()
+    c2 = ~employees["manager_id"].isin(employees["employee_id"])
+    c3 = employees["salary"]<30000
+    return employees[c1 & c2 & c3][["employee_id"]].sort_values("employee_id")
